@@ -1,0 +1,63 @@
+<h1 class="mb-1 restaurant-show-title">{{restaurant_data.name}}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 mx-auto">
+            <form action="/restaurant/create" method="post">
+                {{!-- 1.店名 --}}
+                <div class="form-group">
+                    <label for="InputName">店名</label>
+                    <input type="text" class="form-control" name="name" id="InputName" value="{{{resdata.name}}}">
+                </div>
+                {{!-- 2.英文店名 --}}
+                <div class="form-group">
+                    <label for="InputName_en">英文店名</label>
+                    <input type="text" class="form-control" name="name_en" id="InputName_en"
+                        value="{{{resdata.name_en}}}">
+                </div>
+                {{!-- 3.分類 --}}
+                <div class="form-group">
+                    <label for="InputCategory">分類</label>
+                    <input type="text" class="form-control" name="category" id="InputCategory"
+                        value="{{{resdata.category}}}">
+                </div>
+                {{!-- 4.圖片網址 --}}
+                <div class="form-group">
+                    <label for="InputImage">圖片網址</label>
+                    <input type="text" class="form-control" name="image" id="InputImage" value="{{{resdata.image}}}">
+                </div>
+                {{!-- 5.地址 --}}
+                <div class="form-group">
+                    <label for="InputLocation">地址</label>
+                    <input type="text" class="form-control" name="location" id="InputLocation"
+                        value="{{{resdata.location}}}">
+                </div>
+                {{!-- 6.電話 --}}
+                <div class="form-group">
+                    <label for="InputPhone">電話</label>
+                    <input type="text" class="form-control" name="phone" id="InputPhone" value="{{{resdata.phone}}}">
+                </div>
+                {{!-- 7.googleMap --}}
+                <div class="form-group">
+                    <label for="InputGoogle_map">GoogleMap導航</label>
+                    <input type="text" class="form-control" name="google_map" id="InputGoogle_map"
+                        value="{{{resdata.google_map}}}">
+                </div>
+                {{!-- 8.評分 --}}
+                <div class="form-group">
+                    <label for="InputRating">評分</label>
+                    <input type="text" class="form-control" name="rating" id="InputRating" value="{{{resdata.rating}}}">
+                </div>
+                {{!-- 9.描述 --}}
+                <div class="form-group">
+                    <label for="InputDescription">描述</label>
+                    <input type="text" class="form-control" name="description" id="InputDescription"
+                        value="{{{resdata.description}}}">
+                </div>
+
+                <button type="submit" class="btn btn-secondary">新增餐廳</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>

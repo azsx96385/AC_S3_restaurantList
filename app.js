@@ -4,6 +4,7 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 //const resterant_data = require("./restaurant.json").results;
 const resModel = require("./models/restaurant");
+const bdParser = require("body-parser");
 
 //[設定] express
 const app = express();
@@ -26,6 +27,9 @@ db.once("open", () => {
   console.log(" mongodb connected ");
 });
 
+//[設定] body-parser
+app.use(bdParser.urlencoded({ extended: true }));
+
 //路由區--------------------------------------------------------------------------------------
 
 //靜態檔案路由
@@ -47,6 +51,36 @@ app.get("/restaurants/:id", (req, res) => {
   });
 });
 
+//3. 新增單一個餐廳
+app.get("/restaurant/create", (req, res) => {
+  res.render("create");
+});
+app.post("/restaurant/create", (req, res) => {
+  let newData = req.body;
+  console.log(newData);
+  const resdata = resModel(req.body);
+  resdata.save(err => {
+    if (err) return console.log(err);
+    return res.redirect("/");
+  });
+});
+
+//4. 修改單一個餐廳
+app.get("/restaurant/:id/edit", (req, res) => {
+  resModel.findById(req.params.id, (err, resdata) => {
+    res.render("edit", { resdata });
+  });
+});
+app.post("/restaurant/create", (req, res) => {
+  let newData = req.body;
+  console.log(newData);
+  const resdata = resModel(req.body);
+  resdata.save(err => {
+    if (err) return console.log(err);
+    return res.redirect("/");
+  });
+});
+//----------------------------
 app.get("/search", (req, res) => {
   let keyword = req.query.keyword;
   data = resterant_data.filter(
