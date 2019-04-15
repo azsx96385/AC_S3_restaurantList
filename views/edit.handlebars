@@ -1,8 +1,8 @@
-<h1 class="mb-1 restaurant-show-title">{{restaurant_data.name}}</h1>
+<h1 class="mb-1 restaurant-show-title">{{{resdata.name}}}</h1>
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-10 mx-auto">
-            <form action="/restaurant/create" method="post">
+            <form action="/restaurant/{{{resdata.id}}}/edit" method="post">
                 {{!-- 1.店名 --}}
                 <div class="form-group">
                     <label for="InputName">店名</label>

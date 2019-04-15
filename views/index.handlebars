@@ -38,6 +38,10 @@
                             {{this.rating}}
                             <i class="fas fa-star fa-xs"></i>
                             <a href="/restaurant/{{this.id}}/edit">Edit</a>
+                            <a href="/restaurants/{{this.id}}">Detail</a>
+                            <form action="" method="post" style="display:inline;"><button type="submit"
+                                    class="btn btn-danger">Delete</button>
+                            </form>
                         </span>
 
                     </div>
@@ -45,10 +49,9 @@
                 </div>
                 {{!-- <div>
                         <span></span>
-                        <span><a href="/restaurants/{{this.id}}">Detail</a></span>
+                        <span></span>
                         <span>
-                            <form action="" method="post"><button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            
                         </span>
                     </div> --}}
 

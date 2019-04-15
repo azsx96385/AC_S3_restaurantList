@@ -71,12 +71,25 @@ app.get("/restaurant/:id/edit", (req, res) => {
     res.render("edit", { resdata });
   });
 });
-app.post("/restaurant/create", (req, res) => {
-  let newData = req.body;
-  console.log(newData);
-  const resdata = resModel(req.body);
-  resdata.save(err => {
-    if (err) return console.log(err);
+app.post("/restaurant/:id/edit", (req, res) => {
+  resModel.findById(req.params.id, (err, resdata) => {
+    let updatelist = [
+      "name",
+      "name_en",
+      "category",
+      "image",
+      "location",
+      "phone",
+      "google_map",
+      "rating",
+      "description"
+    ];
+
+    updatelist.forEach(item => {
+      resdata[item] = req.body[item];
+    });
+
+    resdata.save(err => {});
     return res.redirect("/");
   });
 });
