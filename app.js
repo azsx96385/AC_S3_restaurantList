@@ -93,13 +93,25 @@ app.post("/restaurant/:id/edit", (req, res) => {
     return res.redirect("/");
   });
 });
+
+//5.delete 刪除資料
 //----------------------------
+app.post("/restaurant/:id/delete", (req, res) => {
+  resModel.findById(req.params.id, (err, resdata) => {
+    resdata.remove(err => {
+      return res.redirect("/");
+    });
+  });
+});
+
 app.get("/search", (req, res) => {
   let keyword = req.query.keyword;
-  data = resterant_data.filter(
-    item =>
-      item.name.includes(keyword) ||
-      item.name_en.toLowerCase().includes(keyword.toLowerCase())
-  );
-  res.render("index", { restaurants: data });
+  resModel.find((err, alldata) => {
+    data = alldata.filter(
+      item =>
+        item.name.includes(keyword) ||
+        item.name_en.toLowerCase().includes(keyword.toLowerCase())
+    );
+    res.render("index", { restaurants: data });
+  });
 });
