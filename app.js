@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 //const resterant_data = require("./restaurant.json").results;
 const resModel = require("./models/restaurant");
 const bdParser = require("body-parser");
+const methodOverride = require("method-override");
 
 //[設定] express
 const app = express();
@@ -30,6 +31,8 @@ db.once("open", () => {
 //[設定] body-parser
 app.use(bdParser.urlencoded({ extended: true }));
 
+//[設定] method-override
+app.use(methodOverride("_method"));
 //路由區--------------------------------------------------------------------------------------
 
 //靜態檔案路由
@@ -71,7 +74,7 @@ app.get("/restaurant/:id/edit", (req, res) => {
     res.render("edit", { resdata });
   });
 });
-app.post("/restaurant/:id/edit", (req, res) => {
+app.put("/restaurant/:id/edit", (req, res) => {
   resModel.findById(req.params.id, (err, resdata) => {
     let updatelist = [
       "name",
@@ -95,8 +98,7 @@ app.post("/restaurant/:id/edit", (req, res) => {
 });
 
 //5.delete 刪除資料
-//----------------------------
-app.post("/restaurant/:id/delete", (req, res) => {
+app.delete("/restaurant/:id/delete", (req, res) => {
   resModel.findById(req.params.id, (err, resdata) => {
     resdata.remove(err => {
       return res.redirect("/");
@@ -104,6 +106,7 @@ app.post("/restaurant/:id/delete", (req, res) => {
   });
 });
 
+//6. search bar
 app.get("/search", (req, res) => {
   let keyword = req.query.keyword;
   resModel.find((err, alldata) => {
