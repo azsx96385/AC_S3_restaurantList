@@ -19,7 +19,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //[設定] mongoose
-mongoose.connect("mongodb://127.0.0.1/restaurant");
+mongoose.connect("mongodb://127.0.0.1/restaurant", { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", () => {
   console.log("mongodb error ");
@@ -37,84 +37,5 @@ app.use(methodOverride("_method"));
 
 //靜態檔案路由
 app.use(express.static("public"));
-
-//1. 首頁顯示
-app.get("/", (req, res) => {
-  resModel.find((err, resterant_data) => {
-    res.render("index", { restaurants: resterant_data });
-  });
-});
-
-//2. 瀏覽單個餐廳詳細資訊
-app.get("/restaurants/:id", (req, res) => {
-  let id = req.params.id;
-  //data = resterant_data.filter(item => item.id == id);
-  resModel.findById(id, (err, rest_data) => {
-    res.render("show", { restaurant_data: rest_data });
-  });
-});
-
-//3. 新增單一個餐廳
-app.get("/restaurant/create", (req, res) => {
-  res.render("create");
-});
-app.post("/restaurant/create", (req, res) => {
-  let newData = req.body;
-  console.log(newData);
-  const resdata = resModel(req.body);
-  resdata.save(err => {
-    if (err) return console.log(err);
-    return res.redirect("/");
-  });
-});
-
-//4. 修改單一個餐廳
-app.get("/restaurant/:id/edit", (req, res) => {
-  resModel.findById(req.params.id, (err, resdata) => {
-    res.render("edit", { resdata });
-  });
-});
-app.put("/restaurant/:id/edit", (req, res) => {
-  resModel.findById(req.params.id, (err, resdata) => {
-    let updatelist = [
-      "name",
-      "name_en",
-      "category",
-      "image",
-      "location",
-      "phone",
-      "google_map",
-      "rating",
-      "description"
-    ];
-
-    updatelist.forEach(item => {
-      resdata[item] = req.body[item];
-    });
-
-    resdata.save(err => {});
-    return res.redirect("/");
-  });
-});
-
-//5.delete 刪除資料
-app.delete("/restaurant/:id/delete", (req, res) => {
-  resModel.findById(req.params.id, (err, resdata) => {
-    resdata.remove(err => {
-      return res.redirect("/");
-    });
-  });
-});
-
-//6. search bar
-app.get("/search", (req, res) => {
-  let keyword = req.query.keyword;
-  resModel.find((err, alldata) => {
-    data = alldata.filter(
-      item =>
-        item.name.includes(keyword) ||
-        item.name_en.toLowerCase().includes(keyword.toLowerCase())
-    );
-    res.render("index", { restaurants: data });
-  });
-});
+app.use("/", require("./routes/index"));
+app.use("/restaurant", require("./routes/restaurant"));
