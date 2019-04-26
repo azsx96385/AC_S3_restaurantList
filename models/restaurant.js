@@ -5,7 +5,7 @@ const Scehma = mongoose.Schema;
 //設定 restaurant schema
 const resScehma = new Scehma({
   userId: {
-    type: Scehma.type.ObjectId,
+    type: Scehma.Types.ObjectId,
     ref: "users",
     index: true,
     required: true
