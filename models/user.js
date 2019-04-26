@@ -12,4 +12,4 @@ const userSchema = new Schema({
 });
 
 //匯出
-module.exports = mongoose("users", userSchema);
+module.exports = mongoose.model("users", userSchema);
