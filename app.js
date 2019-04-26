@@ -39,3 +39,5 @@ app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use("/", require("./routes/index"));
 app.use("/restaurant", require("./routes/restaurant"));
+app.use("/users", require("./routes/users"));
+app.use("/auth", require("./routes/auth"));
