@@ -6,6 +6,9 @@ const mongoose = require("mongoose");
 const resModel = require("./models/restaurant");
 const bdParser = require("body-parser");
 const methodOverride = require("method-override");
+const flash = require("connect-flash");
+const session = require("express-session");
+const passport = require("passport");
 
 //[設定] express
 const app = express();
@@ -33,6 +36,25 @@ app.use(bdParser.urlencoded({ extended: true }));
 
 //[設定] method-override
 app.use(methodOverride("_method"));
+
+//[設定] session
+app.use(session({ secret: "okok" }));
+
+// //[設定] passport
+// app.use(passport.initialize());
+// app.use(passport.session());
+// require("./config/passport")(passport);
+
+//[設定] 系統訊息
+app.use(flash());
+
+//[設定] res.local
+app.use((req, res, next) => {
+  res.locals.successMessage = req.flash("successMessage");
+  res.locals.errMessage = req.flash("errMessage");
+
+  next();
+});
 //路由區--------------------------------------------------------------------------------------
 
 //靜態檔案路由

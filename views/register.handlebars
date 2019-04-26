@@ -1,25 +1,28 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 m-auto">
+        <div class="col-sm-8 m-auto">
             <div class="card card-body">
                 <h2 class="text-center mb-3">Register</h2>
+                {{> message}}
                 <form action="/users/register" method="post">
                     <div class="form-group">
                         <label for="name">Name: </label>
-                        <input type="text" id="name" class="form-control" name="name">
+                        <input type="text" id="name" class="form-control" name="name" value="{{name}}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email: </label>
-                        <input type="email" id="email" class="form-control" name="email">
+                        <input type="email" id="email" class="form-control" name="email" value="{{ email }}">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password: </label>
-                        <input type="password" id="password" class="form-control" name="password">
+                        <input type="password" id="password" class="form-control" name="password"
+                            value="{{ password }}">
                     </div>
                     <div class="form-group">
                         <label for="password_confirm">Password Confirm: </label>
-                        <input type="password" id="password_confirm" class="form-control" name="passwordConfirm">
+                        <input type="password" id="password_confirm" class="form-control" name="passwordConfirm"
+                            value="{{ passwordConfirm }}">
                     </div>
                     <button class="btn btn-success btn-block">Register</button>
                 </form>
