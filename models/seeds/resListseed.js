@@ -36,7 +36,7 @@ db.once("open", () => {
           rating: item.rating,
           description: item.description
         });
-      } else {
+      } else if (3 <= resdata.indexOf(item) && resdata.indexOf(item) < 6) {
         resModel.create({
           userId: data[1]._id,
           name: item.name,
