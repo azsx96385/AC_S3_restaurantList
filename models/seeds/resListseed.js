@@ -2,8 +2,10 @@
 
 const mongoose = require("mongoose");
 const resModel = require("../restaurant");
+const userModel = require("../user");
 const resJson = require("../../restaurant.json");
 const resdata = resJson.results;
+
 //啟動連線
 mongoose.connect("mongodb://127.0.0.1/restaurant", { useNewUrlParser: true });
 
@@ -18,17 +20,36 @@ db.on("error", () => {
 db.once("open", () => {
   console.log("mongodb connected");
 
-  resdata.forEach(item => {
-    resModel.create({
-      name: item.name,
-      name_en: item.name_en,
-      category: item.category,
-      image: item.image,
-      location: item.location,
-      phone: item.phone,
-      google_map: item.google_map,
-      rating: item.rating,
-      description: item.description
+  userModel.find((err, data) => {
+    resdata.forEach(item => {
+      let userid = "";
+      if (resdata.indexOf(item) < 3) {
+        resModel.create({
+          userId: data[0]._id,
+          name: item.name,
+          name_en: item.name_en,
+          category: item.category,
+          image: item.image,
+          location: item.location,
+          phone: item.phone,
+          google_map: item.google_map,
+          rating: item.rating,
+          description: item.description
+        });
+      } else {
+        resModel.create({
+          userId: data[1]._id,
+          name: item.name,
+          name_en: item.name_en,
+          category: item.category,
+          image: item.image,
+          location: item.location,
+          phone: item.phone,
+          google_map: item.google_map,
+          rating: item.rating,
+          description: item.description
+        });
+      }
     });
   });
 
