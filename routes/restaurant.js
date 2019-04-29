@@ -3,11 +3,12 @@
 const express = require("express");
 const router = express.Router();
 const resModel = require("../models/restaurant");
+const { authenticated } = require("../config/auth");
 
 //路由設定
 
 //2. 瀏覽單個餐廳詳細資訊
-router.get("/show/:id", (req, res) => {
+router.get("/show/:id", authenticated, (req, res) => {
   let id = req.params.id;
   //data = resterant_data.filter(item => item.id == id);
   resModel.findById(id, (err, rest_data) => {
@@ -16,7 +17,7 @@ router.get("/show/:id", (req, res) => {
 });
 
 //3. 新增單一個餐廳
-router.get("/create", (req, res) => {
+router.get("/create", authenticated, (req, res) => {
   res.render("create");
 });
 router.post("/create", (req, res) => {

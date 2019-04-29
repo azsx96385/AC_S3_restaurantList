@@ -3,14 +3,18 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const passport = require("passport");
 
 //設計路由
 router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.post("/login", (req, res) => {
-  res.render("login");
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/login"
+  })(req, res, next);
 });
 
 router.get("/register", (req, res) => {
@@ -57,8 +61,7 @@ router.post("/register", (req, res) => {
             let registerData = new User({
               name,
               email,
-              password,
-              passwordConfirm
+              password
             });
 
             //使用 entity 存到資料庫
@@ -79,7 +82,9 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.render("login");
+  req.logout(); //清除session
+  req.flash("successMessage", "你已經成功登出!!"); //在app.js 我們有將successMessafe 存到 res.locals ，就會被view 使用
+  res.redirect("/users/login");
 });
 
 //匯出路由

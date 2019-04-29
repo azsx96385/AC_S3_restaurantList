@@ -10,6 +10,9 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 //[設定] express
 const app = express();
 const port = 3001;
@@ -41,17 +44,22 @@ app.use(methodOverride("_method"));
 app.use(session({ secret: "okok" }));
 
 // //[設定] passport
-// app.use(passport.initialize());
-// app.use(passport.session());
-// require("./config/passport")(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passport")(passport);
 
 //[設定] 系統訊息
 app.use(flash());
 
 //[設定] res.local
 app.use((req, res, next) => {
+  //系統訊息
   res.locals.successMessage = req.flash("successMessage");
   res.locals.errMessage = req.flash("errMessage");
+  //驗證通過
+  res.locals.isAuthenticated = req.isAuthenticated(); //要是passport 驗證通過就會顯示true
+  //user物件
+  res.locals.user = req.user; //將登入之user物件回塞
 
   next();
 });
