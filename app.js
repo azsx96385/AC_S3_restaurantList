@@ -56,6 +56,7 @@ app.use((req, res, next) => {
   //系統訊息
   res.locals.successMessage = req.flash("successMessage");
   res.locals.errMessage = req.flash("errMessage");
+  res.locals.error = req.flash("error");
   //驗證通過
   res.locals.isAuthenticated = req.isAuthenticated(); //要是passport 驗證通過就會顯示true
   //user物件

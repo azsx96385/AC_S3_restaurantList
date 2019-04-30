@@ -15,16 +15,15 @@ module.exports = passport => {
       User.findOne({ email: email }).then(user => {
         //1.user 空 查無此人 -> done 告訴 驗證器-done(null,false,{message})
         if (!user) {
-          return done(null.false, { message: "申請者尚未註冊" });
+          return done(null, false, { message: "申請者尚未註冊" });
         } else {
           //2.比對密碼雜湊化處理後，是否相同
-
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if (isMatch) {
               return done(null, user);
             } else {
-              return done(null.false, { message: "密碼錯誤" });
+              return done(null, false, { message: "密碼錯誤" });
             }
           });
         }

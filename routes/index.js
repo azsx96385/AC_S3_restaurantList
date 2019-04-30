@@ -9,9 +9,16 @@ const { authenticated } = require("../config/auth");
 
 //1. 首頁顯示
 router.get("/", authenticated, (req, res) => {
-  resModel.find((err, resterant_data) => {
-    res.render("index", { restaurants: resterant_data });
-  });
+  console.log(req.user._id);
+  resModel
+    .find({ userId: req.user._id })
+    .then(resterant_data => {
+      console.log(resterant_data);
+      res.render("index", { restaurants: resterant_data });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 //匯出
