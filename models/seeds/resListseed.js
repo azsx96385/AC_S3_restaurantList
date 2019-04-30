@@ -7,7 +7,9 @@ const resJson = require("../../restaurant.json");
 const resdata = resJson.results;
 
 //啟動連線
-mongoose.connect("mongodb://127.0.0.1/restaurant", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1/restaurant", {
+  useNewUrlParser: true
+});
 
 //接收connection 物件
 const db = mongoose.connection;
