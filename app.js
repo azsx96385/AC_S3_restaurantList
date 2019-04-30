@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== "production") {
 //[設定] express
 const app = express();
 const port = 3001;
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("start listening http://localhost:3001");
 });
 
@@ -25,7 +25,9 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //[設定] mongoose
-mongoose.connect("mongodb://127.0.0.1/restaurant", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1/restaurant", {
+  useNewUrlParser: true
+});
 const db = mongoose.connection;
 db.on("error", () => {
   console.log("mongodb error ");
